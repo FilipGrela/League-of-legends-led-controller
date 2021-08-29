@@ -49,11 +49,10 @@ else:
 strip.begin()
 
 try:
-
-    if args.hue != None and args.saturation!= None and args.value!= None:
-        if args.hue > 360 or args.saturation > 100 or args.value > 100 or args.brightness > 255:
+    if args.hue != None and args.saturation != None and args.value != None:
+        if args.hue > 360 or args.saturation > 100 or args.value > 100:
             print("--------------------Incorrect value--------------------\n   -o max value is 360 where 0 red, 120 green, 240 blue\n   -n nax value is 100\n   -w max value is 100\n   -j max value is 255")
-        leds_set_color(args.hue, args.saturation, args.value
+        leds_set_color(args.hue, args.saturation, args.value)
     else:
         leds_set_color(320, 95, 100)
 except KeyboardInterrupt:
