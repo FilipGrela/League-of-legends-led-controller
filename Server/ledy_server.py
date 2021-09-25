@@ -46,9 +46,13 @@ def on_connection(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected")
     connected = True
     while connected:
-        detect_score_change(request_game_data("liveclientdata/playerscores?summonerName=GrelsoN21"), "scores", conn, addr)
-        detect_score_change(request_game_data("liveclientdata/activeplayer"), "activeplayer", conn, addr)
-        detect_score_change(request_game_data("liveclientdata/playerlist"), "playerlist", conn, addr)
+        try:
+            detect_score_change(request_game_data("liveclientdata/playerscores?summonerName=GrelsoN21"), "scores", conn, addr)
+            detect_score_change(request_game_data("liveclientdata/activeplayer"), "activeplayer", conn, addr)
+            detect_score_change(request_game_data("liveclientdata/playerlist"), "playerlist", conn, addr)
+        except:
+            pass
+        
         try:
             send_msg("ping_message", conn)
         except:

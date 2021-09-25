@@ -8,7 +8,7 @@ LED_COUNT      = 300      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 30     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
@@ -23,20 +23,22 @@ def hsv2rgb(h,s,v):
     return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
 
 def leds_set_color(h, s, v):
-    for i in range(150): 
+    print("Led's are updating:\nRGB: " + str(hsv2rgb(args.hue, args.saturation, args.value)[0]) + " " + str(hsv2rgb(args.hue, args.saturation, args.value)[1]) + " " + str(hsv2rgb(args.hue, args.saturation, args.value)[2]) + "\nHSV: " + str(args.hue) + " " + str(args.saturation) + " " + str(args.value))
+    for i in range(150):
         color = hsv2rgb(h, s, (v/150)*i)
         for j in range(i):
             strip.setPixelColor(149-j, Color(color[0], color[1], color[2]))
             strip.setPixelColor(150+j, Color(color[0], color[1], color[2]))
 
-        if i % 0.5 == 0 or i > 145:
-            strip.show()
+        # if i % 0.5 == 0 or i > 145:
+        sleep(0.0)
+        strip.show()
     strip.show()
 
 parser = argparse.ArgumentParser(description='Enter hsv values.')
-parser.add_argument('-o', '--hue',  type=int, help='Hue value')
-parser.add_argument('-n', '--saturation',  type=int, help='Saturation value.')
-parser.add_argument('-w', '--value',  type=int, help='Color value.')
+parser.add_argument('-o', '--hue',  type=float, help='Hue value')
+parser.add_argument('-n', '--saturation',  type=float, help='Saturation value.')
+parser.add_argument('-w', '--value',  type=float, help='Color value.')
 parser.add_argument('-j', '--brightness', type=int, help='Led brightness.')
 args = parser.parse_args()
 
@@ -50,7 +52,7 @@ strip.begin()
 
 try:
     if args.hue != None and args.saturation != None and args.value != None:
-        if args.hue > 360 or args.saturation > 100 or args.value > 100:
+        if args.hue > 360.0 or args.saturation > 100.0 or args.value > 100.0:
             print("--------------------Incorrect value--------------------\n   -o max value is 360 where 0 red, 120 green, 240 blue\n   -n nax value is 100\n   -w max value is 100\n   -j max value is 255")
         leds_set_color(args.hue, args.saturation, args.value)
     else:

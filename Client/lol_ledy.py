@@ -5,6 +5,7 @@ from rpi_ws281x import *
 import argparse
 from random import randrange
 import colorsys
+import threading
 
 TICK_RATE = 0.3
 SERVER = "192.168.8.136"
@@ -100,7 +101,7 @@ def leds_set_color(color, sleep = 0):
         strip.setPixelColor(150+i, color)
         if i % 8 == 0 or i > 145:
             strip.show()
-    
+
     if sleep != 0:
             time.sleep(sleep)
 
