@@ -55,7 +55,7 @@ def leds_set_color(h, s, v, fast=False):
             strip.setPixelColor(149-j, Color(color[0], color[1], color[2]))
             strip.setPixelColor(150+j, Color(color[0], color[1], color[2]))
 
-        sleep(0.02)
+        # sleep(0.02)
         strip.show()
     strip.show()
 
